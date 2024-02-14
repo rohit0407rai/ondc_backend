@@ -274,37 +274,44 @@ def get_conversation_chain(vectorstore):
 
 
 
+#@app.route('/upload_pdf_url', methods=['POST'])
+#def upload_pdf_url():
+   # global pdf_url, conversation
+    #pdf_url = request.json.get('pdf_url')
+    #save_pdf_url(pdf_url)
+    #print(pdf_url)
+    #pdf_url = load_pdf_url()
+    #if pdf_url is None:
+     #   return jsonify({'error': 'PDF URL not provided'}), 400
+
+   # raw_text = get_pdf_text(pdf_url)
+    #text_chunks = get_text_chunks(raw_text)
+    #vectorstore = get_vectorstore(text_chunks)
+    #conversation = get_conversation_chain(vectorstore)
+
+    #return jsonify({'message': 'Conversation chain started successfully'})
 @app.route('/upload_pdf_url', methods=['POST'])
 def upload_pdf_url():
-    global pdf_url, conversation
+    global pdf_url
     pdf_url = request.json.get('pdf_url')
     save_pdf_url(pdf_url)
     print(pdf_url)
-    pdf_url = load_pdf_url()
-    if pdf_url is None:
-        return jsonify({'error': 'PDF URL not provided'}), 400
-
-    raw_text = get_pdf_text(pdf_url)
-    text_chunks = get_text_chunks(raw_text)
-    vectorstore = get_vectorstore(text_chunks)
-    conversation = get_conversation_chain(vectorstore)
-
-    return jsonify({'message': 'Conversation chain started successfully'})
+    return jsonify({'message': 'PDF URL received successfully'})
 
 
-# @app.route('/start_conversation', methods=['GET'])
-# def start_conversation():
-#     global pdf_url, conversation
-#     pdf_url = load_pdf_url()
-#     if pdf_url is None:
-#         return jsonify({'error': 'PDF URL not provided'}), 400
+ @app.route('/start_conversation', methods=['GET'])
+ def start_conversation():
+     global pdf_url, conversation
+     pdf_url = load_pdf_url()
+     if pdf_url is None:
+         return jsonify({'error': 'PDF URL not provided'}), 400
 
-#     raw_text = get_pdf_text(pdf_url)
-#     text_chunks = get_text_chunks(raw_text)
-#     vectorstore = get_vectorstore(text_chunks)
-#     conversation = get_conversation_chain(vectorstore)
+     raw_text = get_pdf_text(pdf_url)
+     text_chunks = get_text_chunks(raw_text)
+     vectorstore = get_vectorstore(text_chunks)
+     conversation = get_conversation_chain(vectorstore)
 
-#     return jsonify({'message': 'Conversation chain started successfully'})
+     return jsonify({'message': 'Conversation chain started successfully'})
 
 
 @app.route('/chat', methods=['POST'])
