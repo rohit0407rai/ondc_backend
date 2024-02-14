@@ -21,7 +21,7 @@ from io import BytesIO
 from langchain.memory import ConversationBufferMemory
 
 
-app = Flask(_name_)
+app = Flask(__name__)
 CORS(app)
 
 load_dotenv()  # load all our environment variables
@@ -68,7 +68,7 @@ def get_response():
 
 
 # Initialize Firebase
-cred = credentials.Certificate("backend/user_data/ondcproject-b8d10-firebase-adminsdk-kt8cw-457fd65bc5.json")
+cred = credentials.Certificate("ondcproject-b8d10-firebase-adminsdk-kt8cw-457fd65bc5.json")
 firebase_admin.initialize_app(cred, {'storageBucket': 'userData'})
 
 db = firestore.client()
@@ -354,5 +354,5 @@ def chat():
 
 #     return jsonify(data)
 
-if _name_ == '_main_':
+if __name__ == '__main__':
     app.run(debug=True)
