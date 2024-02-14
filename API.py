@@ -79,7 +79,7 @@ def get_response():
 
 
 # Initialize Firebase
-cred = credentials.Certificate("backend/user_data/ondcproject-b8d10-firebase-adminsdk-kt8cw-457fd65bc5.json")
+cred = credentials.Certificate("ondcproject-b8d10-firebase-adminsdk-kt8cw-457fd65bc5.json")
 firebase_admin.initialize_app(cred, {'storageBucket': 'userData'})
 
 db = firestore.client()
