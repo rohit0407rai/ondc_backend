@@ -21,7 +21,7 @@ from io import BytesIO
 from langchain.memory import ConversationBufferMemory
 
 
-app = Flask(__name__)
+app = Flask(_name_)
 CORS(app)
 
 load_dotenv()  # load all our environment variables
@@ -30,31 +30,28 @@ genai.configure(api_key="AIzaSyAUV0qh7tfsK1cwWWr3c9fxk6NS17UWPyE")
 
 def get_gemini_response(prompt):
     fixed_prompt = """
-    {
-        "Checklist": [
-            answer,
-            answer,
-            answer,
-            answer,
-            answer,
-            answer,
-            answer,
-            answer,
-            answer,
-            answer
-        ]
-    }
+        answer,answer,answer,answer,answer,answer,answer,answer,answer,answer
 """
 # Move input_prompt definition inside the function
+    # input_prompt = f"""
+    # You are a compliance expert and I need you to generate a compliance list in the following format:
+    # {fixed_prompt}
+    # Provide the compliance actions in a comma-separated format. Ensure that each value in the list does not contain any special characters such as ',' as they are used as separators. Separate different checklist values using ','. The final answers should be in the format mentioned above, ensuring that all requirements are met: {prompt}
+    # """
     input_prompt = f"""
     You are a compliance expert and I need you to generate a compliance list in the following format:
     {fixed_prompt}
-    keep the key values as it is, instead of answer put the thing to be done for compliance
-    These final answer should in array format as menioned above as mentioned before, you need to do the following making sure all of the above is followed:{prompt}
+    Provide the compliance actions list, which is comma separated and the list values should not have commas. The final answers should be in the format mentioned above, ensuring that all requirements are met: {prompt}
     """
     model = genai.GenerativeModel('gemini-pro')
     response = model.generate_content(input_prompt)
-    return response.text
+    print(response)
+    checklist_items = response.text.split(',')
+    data = []
+    for item in checklist_items:
+        data.append({"item": item})
+    # print(data)
+    return jsonify(data)
 
 
 @app.route('/get_response', methods=['POST'])
@@ -64,22 +61,14 @@ def get_response():
 
     response_text = get_gemini_response(prompt)
 
-    # Remove triple backticks from the beginning and end of the response
-    if response_text.startswith("```") and response_text.endswith("```"):
-        response_text = response_text[3:-3]
-
-    # Check if the response_text starts with "json" and remove it
-    if response_text.startswith("json"):
-        response_text = response_text[4:]
-
-    return jsonify({'response': response_text})
+    return response_text
 
 
 
 
 
 # Initialize Firebase
-cred = credentials.Certificate("ondcproject-b8d10-firebase-adminsdk-kt8cw-457fd65bc5.json")
+cred = credentials.Certificate("backend/user_data/ondcproject-b8d10-firebase-adminsdk-kt8cw-457fd65bc5.json")
 firebase_admin.initialize_app(cred, {'storageBucket': 'userData'})
 
 db = firestore.client()
@@ -334,11 +323,6 @@ def chat():
     return jsonify({'response': response['answer']})
 
 
-    
-   
-
-
-
 # @app.route('/get_data', methods=['GET'])
 # def get_data():
 #     data = []
@@ -370,5 +354,5 @@ def chat():
 
 #     return jsonify(data)
 
-if __name__ == '__main__':
+if _name_ == '_main_':
     app.run(debug=True)
