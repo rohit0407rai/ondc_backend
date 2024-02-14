@@ -14,6 +14,7 @@ click
 colorama
 cryptography
 dataclasses-json
+distro
 exceptiongroup
 firebase-admin
 flask
@@ -35,7 +36,10 @@ greenlet
 grpcio
 grpcio-status
 gunicorn
+h11
+httpcore
 httplib2
+httpx
 idna
 importlib-metadata
 itsdangerous
@@ -45,6 +49,7 @@ jsonpointer
 langchain
 langchain-community
 langchain-core
+langchain-openai
 langsmith
 MarkupSafe
 marshmallow
@@ -52,6 +57,7 @@ msgpack
 multidict
 mypy-extensions
 numpy
+openai
 packaging
 proto-plus
 protobuf
@@ -65,11 +71,14 @@ pyparsing
 pypdf2
 python-dotenv
 PyYAML
+regex
 requests
 rsa
 sniffio
 SQLAlchemy
 tenacity
+tiktoken
+tqdm
 typing-extensions
 typing-inspect
 uritemplate
