@@ -16,7 +16,6 @@ cryptography
 dataclasses-json
 distro
 exceptiongroup
-faiss
 firebase-admin
 flask
 Flask-Cors
